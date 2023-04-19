@@ -1,24 +1,31 @@
+# github action workflow 名稱
 name: ci
-run-name: ${{ github.actor }} is trigger github action
+# github action workflow runtime 名稱，會顯示此次觸發 CI 的人
+run-name: ${{ github.actor }} is trigger github action - default CI
+# 什麼時候會觸發 github action workflow
 on:
   - pull_request
+# 將 workflow 中的所有 job 組合在一起
 jobs:
+  # job 名稱
   build:
+    # 定義 job 將在什麼作業系統上運行
     runs-on: ubuntu-latest
-
+    # 將 job 中所有的 step 組合在一起，嵌套在下方的每一步都是一個 shell script 或 action
     steps:
+      # actions/checkout@3 是 github action 中預先定義的 action，會將我們的代碼庫複製到 github action runner 執行工作時所在的目錄。
       - uses: actions/checkout@v3
-
+      # 此步驟將安裝指定版本的 Node
       - name: use Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-
+      # 此步驟將 npm install 安裝代碼庫
       - name: npm install
         run: npm i
-
+      # 此步驟將執行 lint 驗證
       - name: npm run lint
         run: npm run lint
-
+      # 此步驟將打包代碼庫，若是打包失敗，此次 workflow 會報錯
       - name: npm run build
-        run: npm run build:ci
+        run: npm run build
