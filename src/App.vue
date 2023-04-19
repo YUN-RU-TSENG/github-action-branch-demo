@@ -3,6 +3,7 @@
 <template>
     <div>
         <HelloWorld msg="Vite + Vue" />
+        <p>test no ci</p>
     </div>
 </template>
 
