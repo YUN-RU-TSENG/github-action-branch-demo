@@ -1,0 +1,24 @@
+name: ci
+run-name: ${{ github.actor }} is trigger github action
+on:
+  - pull_request
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: use Node 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: npm install
+        run: npm i
+
+      - name: npm run lint
+        run: npm run lint
+
+      - name: npm run build
+        run: npm run build:ci
